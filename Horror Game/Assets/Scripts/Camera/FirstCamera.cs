@@ -1,26 +1,24 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FirstCamera : MonoBehaviour
 {
 
-    public GameObject cameraOne;
-    public GameObject cameraTwo;
+    public GameObject cameraForward;
+    public GameObject cameraBack;
     public bool cameraIsOn = false;
     public int cameraNumber;
 
     void Start()
     {
         cameraNumber = 1;
-        StartCoroutine(SwitchCamera());
     }
 
-    IEnumerator SwitchCamera ()
+    private void OnTriggerEnter(Collider other)
     {
-        yield return new WaitForSeconds(5);
-        cameraTwo.SetActive(true);
-        cameraOne.SetActive(false);
-        cameraIsOn = true;
-        cameraNumber = 2;
+       if (other.tag == "Player")
+        {
+            cameraForward.SetActive(true);
+            cameraBack.SetActive(false);
+        }
     }
 }
