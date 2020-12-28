@@ -17,7 +17,14 @@ public class TankControls : MonoBehaviour
         if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
         {
             isMoving = true;
+            if (Input.GetButton("SKey"))
+            {
+                player.GetComponent<Animator>().Play("WalkBackwards");
+            }
+            else
+            {
             player.GetComponent<Animator>().Play("Walk");
+            }
             horizontalMovement = Input.GetAxis("Horizontal") * Time.deltaTime * rotationSpeed;
             verticalMovement = Input.GetAxis("Vertical") * Time.deltaTime * movementSpeed;
             player.transform.Rotate(0f, horizontalMovement, 0f);
