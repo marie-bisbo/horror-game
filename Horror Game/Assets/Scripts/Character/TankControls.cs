@@ -26,7 +26,6 @@ public class TankControls : MonoBehaviour
                 backwardsMovementCheck = true;
                 player.GetComponent<Animator>().Play("WalkBackwards");
             }
-
             else
             {
                 backwardsMovementCheck = false;
@@ -39,7 +38,7 @@ public class TankControls : MonoBehaviour
                     player.GetComponent<Animator>().Play("Run");
                 }
             }
-            if (isRunning == false)
+            if (isRunning == false || backwardsMovementCheck == true)
             {
                 verticalMovement = Input.GetAxis("Vertical") * Time.deltaTime * walkingSpeed;
             }
