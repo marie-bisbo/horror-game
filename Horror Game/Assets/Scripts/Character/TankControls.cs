@@ -23,42 +23,58 @@ public class TankControls : MonoBehaviour
             isMoving = true;
             if (Input.GetButton("SKey"))
             {
-                backwardsMovementCheck = true;
-                player.GetComponent<Animator>().Play("WalkBackwards");
+                WalkBackwards();
             }
             else
             {
                 backwardsMovementCheck = false;
                 if (isRunning == false)
                 {
-                    player.GetComponent<Animator>().Play("Walk");
+                    Walk();
                 }
                 else
                 {
-                    player.GetComponent<Animator>().Play("Run");
+                    Run();
                 }
             }
-            if (isRunning == false || backwardsMovementCheck == true)
-            {
-                verticalMovement = Input.GetAxis("Vertical") * Time.deltaTime * walkingSpeed;
-            }
-            if (isRunning == true && backwardsMovementCheck == false)
-            {
-                verticalMovement = Input.GetAxis("Vertical") * Time.deltaTime * runningSpeed;
-            }
-            horizontalMovement = Input.GetAxis("Horizontal") * Time.deltaTime * rotationSpeed;
-            player.transform.Rotate(0f, horizontalMovement, 0f);
-            player.transform.Translate(0, 0, verticalMovement);
+            MovePlayer();
         }
         else
         {
-            isMoving = false;
-            player.GetComponent<Animator>().Play("Idle");
+            StandStill();
         }
     }
     void CheckIfRunning ()
     {
         isRunning = Input.GetKey(KeyCode.LeftShift);
+    }
+    void Walk()
+    {
+        player.GetComponent<Animator>().Play("Walk");
+        verticalMovement = Input.GetAxis("Vertical") * Time.deltaTime * walkingSpeed;
+    }
+    void Run()
+    {
+        player.GetComponent<Animator>().Play("Run");
+        verticalMovement = Input.GetAxis("Vertical") * Time.deltaTime * runningSpeed;
+    }
+    void WalkBackwards()
+    {
+        isRunning = false;
+        backwardsMovementCheck = true;
+        player.GetComponent<Animator>().Play("WalkBackwards");
+        verticalMovement = Input.GetAxis("Vertical") * Time.deltaTime * walkingSpeed;
+    }
+    void MovePlayer()
+    {
+        horizontalMovement = Input.GetAxis("Horizontal") * Time.deltaTime * rotationSpeed;
+        player.transform.Rotate(0f, horizontalMovement, 0f);
+        player.transform.Translate(0, 0, verticalMovement);
+    }
+    void StandStill()
+    {
+        isMoving = false;
+        player.GetComponent<Animator>().Play("Idle");
     }
 }
 
